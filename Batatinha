@@ -1,0 +1,50 @@
+import matplotlib.pyplot as plt
+import numpy as np
+
+# Função para desenhar contornos simplificados dos continentes
+def draw_continent(ax, coords, color='white'):
+    coords = np.array(coords)
+    ax.fill(coords[:, 0], coords[:, 1], edgecolor='black', facecolor=color)
+
+# Criar a figura e os eixos
+fig, ax = plt.subplots(figsize=(11.7, 8.3))
+
+# Desenhar as linhas de latitude e longitude
+ax.set_xticks(np.arange(-180, 181, 30))
+ax.set_yticks(np.arange(-90, 91, 30))
+ax.grid(which='both', color='gray', linestyle='--', linewidth=0.5)
+
+# Inverter o eixo Y para colocar o Sul no topo
+ax.set_xlim(-180, 180)
+ax.set_ylim(-90, 90)
+ax.invert_yaxis()
+
+# Coordenadas simplificadas dos continentes
+america_do_sul = [[-81, -56], [-35, -56], [-35, 12], [-81, 12]]
+america_do_norte = [[-168, 15], [-52, 15], [-52, 72], [-168, 72]]
+africa = [[17, -35], [51, -35], [51, 37], [17, 37]]
+europa = [[-31, 36], [40, 36], [40, 71], [-31, 71]]
+asia = [[25, 1], [146, 1], [146, 77], [25, 77]]
+oceania = [[110, -48], [180, -48], [180, -10], [110, -10]]
+
+# Desenhar os continentes
+draw_continent(ax, america_do_sul)
+draw_continent(ax, america_do_norte)
+draw_continent(ax, africa)
+draw_continent(ax, europa)
+draw_continent(ax, asia)
+draw_continent(ax, oceania)
+
+# Ajustar os rótulos e o estilo
+ax.set_xlabel('Longitude', fontsize=12)
+ax.set_ylabel('Latitude', fontsize=12)
+
+# Salvar o mapa como um arquivo PDF
+output_path = "mapa_mundi.pdf"
+plt.savefig(output_path, bbox_inches='tight', pad_inches=0.1)
+plt.close(fig)
+
+# Exibir o mapa gerado
+from IPython.display import display
+from IPython.display import PDF
+display(PDF(output_path))
